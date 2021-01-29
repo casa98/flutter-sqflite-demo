@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sqflite/database/database_helper.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,6 +35,47 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("Flutter Sqflite Demo"),
         centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FlatButton(
+              onPressed: () async{
+                int i = await DatabaseHelper.instance.insert({
+                  'name': 'Mafe Garizábalo',
+                });
+                print("Primary key: " + i.toString());
+              },
+              child: Text('Insert'),
+            ),
+            FlatButton(
+              onPressed: () async{
+                List<Map<String, dynamic>> queryRows =
+                    await DatabaseHelper.instance.queryAll();
+                print(queryRows);
+              },
+              child: Text('Query'),
+            ),
+            FlatButton(
+              onPressed: () async {
+                int updatedId = await DatabaseHelper.instance.update({
+                  '_id': 1,
+                  'name': 'Mi mamá me mima',
+                });
+                print(updatedId);
+              },
+              child: Text('Update'),
+            ),
+            FlatButton(
+              onPressed: () async{
+                int deletedId = await DatabaseHelper.instance.delete(5);
+                print(deletedId);
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        ),
       ),
     );
   }

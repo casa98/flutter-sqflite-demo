@@ -37,10 +37,10 @@ class DatabaseHelper {
   }
 
   Future _createTable(Database db, int version){
-    return db.query(
+    return db.execute(
       '''
       CREATE TABLE $_tableName(
-        $_columnId INTEGER PRIMARY KEY,   // Will be auto-generated
+        $_columnId INTEGER PRIMARY KEY,
         $_columnName TEXT NOT NULL
       )
       '''
